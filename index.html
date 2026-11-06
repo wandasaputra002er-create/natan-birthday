@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Natan!</title>
+<meta name="theme-color" content="#263F60">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="paw" viewBox="0 0 24 24"><ellipse cx="12" cy="16.5" rx="5.5" ry="4.5"/><circle cx="4.8" cy="11" r="2.3"/><circle cx="9" cy="5.8" r="2.3"/><circle cx="15" cy="5.8" r="2.3"/><circle cx="19.2" cy="11" r="2.3"/></symbol>
+  <symbol id="cat" viewBox="0 0 120 100"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M34 40 L30 14 L50 28 Q60 25 70 28 L90 14 L86 40 Q92 52 84 64 Q60 74 36 64 Q28 52 34 40Z"/><path d="M36 64 Q30 90 50 92 L74 92 Q94 90 86 64"/><path d="M88 86 Q116 84 108 58"/><path d="M48 46 q3 -3 6 0M66 46 q3 -3 6 0M57 54 l3 3 l3 -3"/><path d="M40 54 l-14 -2M40 58 l-14 3M80 54 l14 -2M80 58 l14 3"/></g></symbol>
+  <symbol id="flower" viewBox="0 0 40 40"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="20" cy="14" r="2.5"/><path d="M20 11.5 q-5 -8 0 -10 q5 2 0 10M22.5 14 q8 -2 9 3 q-3 5 -9 -3M17.5 14 q-8 -2 -9 3 q3 5 9 -3M20 16.5 v20 M20 28 q-8 -2 -10 -8 q8 0 10 8 M20 31 q8 -2 10 -8 q-8 0 -10 8"/></g></symbol>
+  <symbol id="leaf" viewBox="0 0 60 120"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M30 118 Q28 60 34 4"/><path d="M30 100 q-18 -6 -22 -24 q18 4 22 24M31 80 q18 -6 20 -24 q-18 4 -20 24M32 56 q-16 -6 -18 -22 q16 4 18 22M33 36 q14 -4 14 -18 q-14 2 -14 18"/></g></symbol>
+</svg>
+
+<div id="gate" class="gate" role="dialog" aria-modal="true" aria-labelledby="gT">
+  <svg class="gp g1" aria-hidden="true"><use href="#paw"/></svg><svg class="gp g2" aria-hidden="true"><use href="#paw"/></svg><svg class="gp g3" aria-hidden="true"><use href="#flower"/></svg>
+  <p class="eyebrow">For Natan</p>
+  <div id="gT" class="gtitle">A Little Universe</div>
+  <p class="sub">Ayo rayakan semuanya!
+  </p>
+  <div class="row"><button id="enterSound" class="btn" data-quiet>Enter with music ♪</button><button id="enterQuiet" class="btn ghost" data-quiet>Enter quietly</button></div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="clouds" aria-hidden="true"><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i></div>
+<button id="themeBtn" class="theme" aria-pressed="false" aria-label="Toggle night mode">☾</button>
+<div class="music">
+  <button id="musicBtn" class="theme" aria-pressed="false" aria-label="Play music">♪</button>
+  <button id="mixBtn" class="theme small" aria-expanded="false" aria-controls="mixer" aria-label="Sound mixer">mix</button>
+  <span id="musicHint" class="tiny">Tap for music</span>
+</div>
+<div id="mixer" class="mixer" role="group" aria-label="Sound mixer" hidden>
+  <div class="mix-h"><strong>Sound mixer</strong><button id="mMute" class="mini" aria-pressed="false">Mute all</button></div>
+  <canvas id="viz" width="280" height="44" aria-hidden="true"></canvas>
+  <label class="mrow"><span>Master</span><input id="mMaster" type="range" min="0" max="1" step="0.05"></label>
+  <label class="mrow"><span>Music</span><input id="mMusic" type="range" min="0" max="1" step="0.05"></label>
+  <label class="mrow"><span>Effects</span><input id="mSfx" type="range" min="0" max="1" step="0.05"></label>
+  <label class="mrow"><span>Ambience</span><input id="mAmb" type="range" min="0" max="1" step="0.05"></label>
+  <div class="amb" role="group" aria-label="Ambience type">
+    <button class="mini" data-amb="auto">Auto</button><button class="mini" data-amb="off">Off</button><button class="mini" data-amb="night">Night</button><button class="mini" data-amb="rain">Rain</button><button class="mini" data-amb="space">Space</button>
+  </div>
+  <details><summary>Sound lab</summary><div id="lab"></div></details>
+</div>
+<div id="progress" class="progress" aria-hidden="true"></div>
+
+<main id="app">
+  <!-- PAGE 1 : THE BEGINNING -->
+  <section id="home" class="page" aria-labelledby="t-home">
+    <svg class="deco d1" aria-hidden="true"><use href="#flower"/></svg>
+    <svg class="deco d2" aria-hidden="true"><use href="#leaf"/></svg>
+    <svg class="deco d3" aria-hidden="true"><use href="#flower"/></svg>
+    <p class="eyebrow">A little something for you</p>
+    <figure id="heroPol" class="polaroid hero">
+      <div class="ph"><img src="assets/natandirektorat.jpeg" alt="Photograph of Natan"></div>
+      <figcaption class="cap">Jonatan Priji Aditia Siagian</figcaption>
+      <svg class="tape" viewBox="0 0 24 24" aria-hidden="true"><use href="#paw"/></svg>
+    </figure>
+    <h1 id="t-home" tabindex="-1">Happy Birthday, Natan!</h1>
+    <p class="date">03 · January · 2007</p>
+    <p class="sub">Another year, another chapter.</p>
+    <p class="lead"></p>
+    <p class="stats"><span id="hello"></span><span id="daysLine"></span><span id="cdLine"></span></p>
+    <div class="row"><button class="btn" data-go="surprise">surprise</button></div>
+  </section>
+
+   <!-- PAGE 5 : SURPRISE -->
+  <section id="surprise" class="page" hidden aria-labelledby="t-sur">
+    <p class="eyebrow">A little surprise</p>
+    <h2 id="t-sur" tabindex="-1">For you, quietly</h2>
+    <div class="cats">
+      <button class="catbtn a" aria-label="Pet the first cat"><svg class="cat"><use href="#cat"/></svg></button>
+      <button class="catbtn b" aria-label="Pet the second cat"><svg class="cat"><use href="#cat"/></svg></button>
+    </div>
+    <p class="tiny" id="petLine">Psst. The cats like being tapped.</p>
+    <div id="petDots" class="dots" aria-hidden="true" hidden></div>
+    <p class="quote">Some people make ordinary days a little less ordinary.</p>
+    <p class="quote q2">I hope you know that your existence, in its own quiet way, matters more than you might think.</p>
+    <button id="secretAgain" class="btn ghost" data-quiet hidden>Read the surprise again</button>
+    <button class="btn" data-go="letter">Sepucuk Surat</button>
+  </section>
+
+  <!-- PAGE 3 : LETTER -->
+  <section id="letter" class="page" hidden aria-labelledby="t-letter">
+    <p class="eyebrow">For Natan</p>
+    <h2 id="t-letter" tabindex="-1">Birthday Letter</h2>
+    <button id="env" class="envelope" aria-expanded="false" aria-controls="paper">
+      <span class="flap"></span><span class="pocket"></span><span class="seal">♡</span><span class="hint">Tap to open</span>
+    </button>
+    <article id="paper" class="paper" aria-live="polite">
+      <p>Dear Natan,</p>
+      <p>Selamat bertambah usia.</p>
+      <p>Aku harap dunia memberimu lebih banyak alasan untuk tersenyum, lebih banyak kesempatan untuk tumbuh, dan lebih banyak ruang untuk menjadi dirimu sendiri.</p>
+      <p>Semoga hal-hal yang sedang kamu perjuangkan menemukan jalannya. Semoga hal-hal yang membuatmu lelah perlahan menemukan jedanya.</p>
+      <p>Kamu tidak harus selalu punya jawaban. Tidak harus selalu kuat. Tidak harus menyelesaikan semuanya sekaligus.</p>
+      <p>Ada begitu banyak halaman yang belum kamu baca, tempat-tempat yang belum kamu kunjungi, dan kemungkinan yang belum kamu temui.</p>
+      <p class="en">Take your time. One page at a time.</p>
+      <p class="sign">With lots of love ♡</p>
+    </article>
+    <div id="letterBtns" class="row" hidden>
+      <button id="skip" class="btn ghost">Show all at once</button>
+      <button id="handBtn" class="btn ghost" aria-pressed="false">Handwriting</button>
+      <button id="replay" class="btn ghost" data-quiet>Read again</button>
+      <button class="btn" data-go="surprise">Next: a little surprise</button>
+    </div>
+  </section>
+
+  <!-- PAGE 4 : MEMORIES -->
+  <section id="memories" class="page" hidden aria-labelledby="t-mem">
+    <p class="eyebrow">Scrapbook</p>
+    <h2 id="t-mem" tabindex="-1">Little Memories</h2>
+    <p class="lead">Six frames. Tap a photograph to turn it over and read the message behind it. Captions, dates and messages can be edited by tapping them.</p>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <!-- PAGE 6 : WISH -->
+  <section id="wish" class="page" hidden aria-labelledby="t-wish">
+    <p class="eyebrow">Under a little universe</p>
+    <h2 id="t-wish" tabindex="-1">If you could wish for one thing this year, what would it be?</h2>
+    <label for="wishText" class="sr">Your wish</label>
+    <textarea id="wishText" rows="3" maxlength="400" placeholder="Write it here…"></textarea>
+    <div class="row"><button id="saveWish" class="btn" data-quiet>Save my wish</button><button id="cardBtn" class="btn ghost" data-quiet>Save a star card</button></div>
+    <p id="wishMsg" class="msg" role="status"></p>
+    <ul id="wishList" class="wishes"></ul>
+    <p class="fine">Every wish becomes a star in your own constellation. They stay private, stored only in this browser.</p>
+  </section>
+  <!-- CAKE -->
+  <section id="cake" class="page" hidden aria-labelledby="t-cake">
+    <p class="eyebrow">Make it count</p>
+    <h2 id="t-cake" tabindex="-1">Blow out the candles</h2>
+    <svg id="cakeSvg" class="cake" viewBox="0 0 300 270" role="img" aria-label="Birthday cake with number candles">
+      <ellipse cx="150" cy="252" rx="130" ry="12" style="fill:var(--gray);opacity:.5"/>
+      <rect x="35" y="180" width="230" height="70" rx="10" style="fill:var(--sky)"/>
+      <rect x="70" y="135" width="160" height="50" rx="10" style="fill:var(--ivory);stroke:var(--navy);stroke-width:2"/>
+      <path d="M35 190 q14 16 28 0 q14 16 28 0 q14 16 28 0 q14 16 28 0 q14 16 28 0 q14 16 28 0 q14 16 28 0 q14 16 28 0" style="fill:none;stroke:var(--ivory);stroke-width:5;stroke-linecap:round"/>
+      <g id="candles"></g>
+    </svg>
+    <p id="cakeMsg" class="msg" role="status">Take a breath.</p>
+    <div class="row"><button id="micBtn" class="btn" data-quiet>Blow into the microphone</button><button id="blowBtn" class="btn ghost" data-quiet>Blow with a tap</button><button id="relight" class="btn ghost" data-quiet hidden>Light them again</button></div>
+    <button id="cakeWish" class="btn" data-go="wish" hidden>Now make a wish</button>
+    <p class="fine">The microphone is only used on this page, only after you press the button, and nothing is recorded or sent anywhere.</p>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers" class="page" hidden aria-labelledby="t-num">
+    <p class="eyebrow">A little universe, measured</p>
+    <h2 id="t-num" tabindex="-1">Natan in Numbers</h2>
+    <div class="ncards">
+      <div class="ncard"><b class="nv" id="nDays">0</b><span class="nl">days of being Natan</span></div>
+      <div class="ncard"><b class="nv" id="nWeeks">0</b><span class="nl">weeks</span></div>
+      <div class="ncard"><b class="nv" id="nHours">0</b><span class="nl">hours</span></div>
+      <div class="ncard"><b class="nv" id="nTrips">0</b><span class="nl">trips around the Sun</span></div>
+      <div class="ncard"><b class="nv" id="nKm">0</b><span class="nl">million km travelled with the Earth</span></div>
+      <div class="ncard"><b class="nv" id="nMoons">0</b><span class="nl">moon cycles completed</span></div>
+      <div class="ncard wide"><b class="nv" id="nBeats">0</b><span class="nl">heartbeats, roughly</span></div>
+    </div>
+    <div class="ncards">
+      <div class="ncard"><div id="moonBirth" class="moonbox"></div><span class="nl">The moon on 03 Jan 2007</span><span id="moonBirthTxt" class="ntx"></span></div>
+      <div class="ncard"><div id="moonNow" class="moonbox"></div><span class="nl">The moon tonight</span><span id="moonNowTxt" class="ntx"></span></div>
+    </div>
+    <div class="ncards facts">
+      <div class="ncard"><span class="nl">Born on a</span><b class="nv sm" id="fDay">Wednesday</b></div>
+      <div class="ncard"><span class="nl">Sign</span><b class="nv sm">Capricorn</b></div>
+      <div class="ncard"><span class="nl">Birthstone</span><b class="nv sm">Garnet</b></div>
+      <div class="ncard"><span class="nl">Birth flower</span><b class="nv sm">Carnation</b></div>
+    </div>
+    <p class="fine">Heartbeats assume an average of 70 per minute. Moon phases are calculated approximations.</p>
+  </section>
+
+  <!-- OPEN WHEN -->
+  <section id="notes" class="page" hidden aria-labelledby="t-notes">
+    <p class="eyebrow">Small envelopes, for later</p>
+    <h2 id="t-notes" tabindex="-1">Open When…</h2>
+    <p class="lead">Keep them for the right moment. Each one can be opened whenever you need it.</p>
+    <div id="nGrid" class="ngrid"></div>
+    <p id="noteCount" class="tiny"></p>
+  </section>
+
+  <!-- UNIVERSE MAP -->
+  <section id="universe" class="page" hidden aria-labelledby="t-uni">
+    <p class="eyebrow">A little universe</p>
+    <h2 id="t-uni" tabindex="-1">Universe Map</h2>
+    <p class="lead">Every planet is a place. Tap one to travel there.</p>
+    <div class="orrery">
+      <div class="sun" aria-hidden="true">Natan</div>
+      <div class="ring" style="--s:30%;--d:24s"><button class="planet" data-go="letter" style="--c:#7897BB;--d:24s" aria-label="Birthday Letter">L</button></div>
+      <div class="ring r" style="--s:42%;--d:30s"><button class="planet" data-go="memories" style="--c:#263F60;--d:30s" aria-label="Little Memories">M</button></div>
+      <div class="ring" style="--s:54%;--d:38s"><button class="planet" data-go="surprise" style="--c:#5d7ea6;--d:38s" aria-label="A Little Surprise">S</button></div>
+      <div class="ring r" style="--s:65%;--d:46s"><button class="planet" data-go="wish" style="--c:#34517a;--d:46s" aria-label="Make a Wish">W</button></div>
+      <div class="ring" style="--s:76%;--d:56s"><button class="planet" data-go="cake" style="--c:#6b88ad;--d:56s" aria-label="Birthday Cake">C</button></div>
+      <div class="ring r" style="--s:87%;--d:68s"><button class="planet" data-go="numbers" style="--c:#4a6a95;--d:68s" aria-label="Natan in Numbers">N</button></div>
+      <div class="ring" style="--s:98%;--d:82s"><button class="planet" data-go="notes" style="--c:#57709a;--d:82s" aria-label="Open When">O</button></div>
+    </div>
+    <div class="legend row">
+      <button class="btn ghost" data-go="letter">Letter</button><button class="btn ghost" data-go="memories">Memories</button><button class="btn ghost" data-go="surprise">Surprise</button>
+      <button class="btn ghost" data-go="wish">Wish</button><button class="btn ghost" data-go="cake">Cake</button><button class="btn ghost" data-go="numbers">Numbers</button><button class="btn ghost" data-go="notes">Open When</button>
+    </div>
+  </section>
+</main>
+
+<div class="fab-wrap">
+  <nav id="menu" class="menu" aria-label="Menu" hidden>
+    <h2 class="menu-h">Meow, Natan!</h2>
+    <button data-go="letter">Birthday Letter</button>
+    <button data-go="memories">Little Memories</button>
+    <button data-go="surprise">A Little Surprise</button>
+    <button data-go="wish">Make a Wish</button>
+    <button data-go="cake">Birthday Cake</button>
+    <button data-go="numbers">Natan in Numbers</button>
+    <button data-go="notes">Open When…</button>
+    <button data-go="universe">Universe Map</button>
+    <button data-go="home">Back to Home</button>
+  </nav>
+  <button id="fab" class="fab" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24"><use href="#paw"/></svg></button>
+</div>
+
+<dialog id="lb" class="lb" aria-label="Photo viewer">
+  <button class="lb-x" id="lbX" aria-label="Close">✕</button>
+  <button class="lb-n" id="lbP" aria-label="Previous photo">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption><p id="lbNote" class="lbnote"></p><p id="lbCount" class="tiny"></p></figure>
+  <button class="lb-n" id="lbN" aria-label="Next photo">›</button>
+</dialog>
+<div id="secret" class="secret" role="dialog" aria-modal="true" aria-labelledby="secT" hidden>
+  <div class="secret-card">
+    <p class="eyebrow">Twenty taps</p>
+    <h2 id="secT" tabindex="-1"></h2>
+    <div id="secLines"></div>
+    <button id="secretX" class="btn" data-quiet>Close</button>
+  </div>
+</div>
+<div id="noteView" class="secret" role="dialog" aria-modal="true" aria-labelledby="nvWhen" hidden>
+  <div class="secret-card">
+    <p class="eyebrow" id="nvWhen" tabindex="-1"></p>
+    <p id="nvText" class="sline"></p>
+    <button id="nvX" class="btn" data-quiet>Close</button>
+  </div>
+</div>
+<script src="js/audio.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
